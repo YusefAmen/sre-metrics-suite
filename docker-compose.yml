@@ -10,6 +10,9 @@ services:
       MYSQL_DATABASE: testdb
     ports:
       - "3306:3306"
+    volumes:
+      - ./prometheus/mysql-init:/docker-entrypoint-initdb.d   # <<< THIS LINE ADDED
+                                                               # points to SQL initialization folder
   
   exporter:
     build: ./exporter
