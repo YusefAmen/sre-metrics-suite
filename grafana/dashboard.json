@@ -1,0 +1,65 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "SRE Metrics MVP",
+    "panels": [
+      {
+        "type": "gauge",
+        "title": "DB Query Latency (s)",
+        "targets": [{"expr": "db_query_latency_seconds"}],
+        "datasource": "Prometheus",
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "max": 1
+          }
+        }
+      },
+      {
+        "type": "gauge",
+        "title": "DB Replication Lag (s)",
+        "targets": [{"expr": "db_replication_lag_seconds"}],
+        "datasource": "Prometheus",
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "max": 10
+          }
+        }
+      },
+      {
+        "type": "stat",
+        "title": "Backup Status",
+        "targets": [{"expr": "db_backup_success"}],
+        "datasource": "Prometheus",
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"color": "red", "value": 0},
+                {"color": "green", "value": 1}
+              ]
+            },
+            "mappings": [
+              {
+                "type": "value",
+                "options": {
+                  "0": {
+                    "text": "FAIL"
+                  },
+                  "1": {
+                    "text": "OK"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "schemaVersion": 30,
+    "version": 1
+  }
+}
+
